@@ -6,12 +6,17 @@ export const states = {
 		key: "isLoggedIn",
 		default: false,
 	}),
-	sessionState: atom<Models.Session | null>({
-		key: "session",
-		default: null,
-	}),
 	userState: atom<Models.User<Models.Preferences> | null>({
 		key: "user",
 		default: null,
+		effects: [
+			({ onSet }) => {
+				onSet((user) => {
+					if (user) {
+						localStorage.setItem("user", JSON.stringify(user));
+					}
+				});
+			},
+		],
 	}),
 };

@@ -22,7 +22,6 @@ const Login: React.FC = () => {
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const setIsLoggedIn = useSetRecoilState(states.isLoggedInState);
-	const setSession = useSetRecoilState(states.sessionState);
 	const setUser = useSetRecoilState(states.userState);
 	// TODO: Do something with the remember me checkbox
 	const appwrite = useContext(AppwriteContext);
@@ -41,7 +40,6 @@ const Login: React.FC = () => {
 			const session = await appwrite?.loginUser(email, password);
 			if (session) {
 				setIsLoggedIn(true);
-				setSession(session);
 				let account = await appwrite?.getAccount();
 				if (account) setUser(account);
 
