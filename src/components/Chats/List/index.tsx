@@ -1,15 +1,18 @@
 import { Container, Paper, ScrollArea, Text } from "@mantine/core";
 import { useContext, useEffect, useRef } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { Chat } from "../../interfaces";
-import { states } from "../../store";
-import { AppwriteContext } from "../Appwrite";
+import { Chat } from "@/interfaces";
+import { states } from "@/store/index";
+import { AppwriteContext } from "@/components/Appwrite";
+import useStyles from "./List.style";
 
 const MessageList: React.FC = () => {
 	const [messages, setMessages] = useRecoilState(states.chatsState);
 	const appwrite = useContext(AppwriteContext);
 	const viewport = useRef<HTMLDivElement>(null);
 	const user = useRecoilValue(states.userState);
+
+	const { classes, cx } = useStyles();
 
 	useEffect(() => {
 		viewport.current?.scrollTo({
@@ -45,39 +48,20 @@ const MessageList: React.FC = () => {
 			setMessages(await appwrite?.getChats()!);
 		})();
 	}, []);
+
 	return (
-		<Container style={{ width: "100%", flex: 1 }} mt="sm">
-			<ScrollArea
-				py="xs"
-				style={{
-					height: "79vh",
-					position: "relative",
-				}}
-				viewportRef={viewport}
-			>
+		<Container className={classes.root}>
+			<ScrollArea className={classes.container} viewportRef={viewport}>
 				{Array.from(messages).map((message) => (
 					<Paper
 						key={message.id}
 						withBorder
-						px="sm"
-						py={1}
-						mb="xs"
-						sx={(theme) => ({
-							width: "fit-content",
-							backgroundColor: theme.colors.orange[3],
-							color: theme.colors.dark[7],
-							marginLeft:
-								message.name === user?.name
-									? "auto"
-									: theme.spacing.lg,
-							marginRight: theme.spacing.lg,
+						className={cx(classes.message, {
+							[classes.messageMe]: user?.name === message.name,
 						})}
 					>
 						<Text size="md">{message.message}</Text>
-						<Text
-							size="xs"
-							sx={(theme) => ({ color: theme.colors.gray[9] })}
-						>
+						<Text size="xs" className={classes.messageName}>
 							{message.name}
 						</Text>
 					</Paper>

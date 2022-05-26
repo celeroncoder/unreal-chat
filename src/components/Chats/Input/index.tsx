@@ -1,17 +1,11 @@
 import { ActionIcon, Container, Textarea } from "@mantine/core";
 import { Send } from "tabler-icons-react";
+import useStyles from "./Input.styles";
 
 const Input: React.FC = () => {
+	const { classes } = useStyles();
 	return (
-		<Container
-			style={{
-				width: "100%",
-				display: "flex",
-				alignItems: "center",
-				justifyContent: "space-between",
-			}}
-			p={0}
-		>
+		<Container className={classes.root}>
 			<Textarea
 				placeholder="Type a message..."
 				autosize
