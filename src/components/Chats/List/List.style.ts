@@ -22,6 +22,7 @@ const useStyles = createStyles((theme) => ({
 		marginLeft: theme.spacing.lg,
 	},
 	messageMe: {
+		backgroundColor: theme.colors.red[3],
 		marginLeft: "auto",
 	},
 	messageName: {
