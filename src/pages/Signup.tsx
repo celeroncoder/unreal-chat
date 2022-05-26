@@ -13,8 +13,8 @@ import { showNotification } from "@mantine/notifications";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { X } from "tabler-icons-react";
-import { AppwriteContext } from "../components/Appwrite";
-import { Logo } from "../components/shared";
+import { AppwriteContext } from "@/components/Appwrite";
+import { Logo } from "@/components/shared";
 
 const Signup: React.FC = () => {
 	const [name, setName] = useState("");

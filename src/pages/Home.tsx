@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { X } from "tabler-icons-react";
-import { Chats } from "../components";
-import { states } from "../store";
+import { Chats } from "@/components";
+import { states } from "@/store";
 
 const Home: React.FC = () => {
 	const setUser = useSetRecoilState(states.userState);

@@ -1,5 +1,5 @@
-import Appwrite from "../services/AppwriteService";
-import { AppwriteContext } from "../context";
+import Appwrite from "@/services/AppwriteService";
+import { AppwriteContext } from "@/context";
 
 export default Appwrite;
 

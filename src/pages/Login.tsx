@@ -15,8 +15,8 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { X } from "tabler-icons-react";
-import { AppwriteContext } from "../components/Appwrite";
-import { states } from "../store";
+import { AppwriteContext } from "@/components/Appwrite";
+import { states } from "@/store";
 
 const Login: React.FC = () => {
 	const [email, setEmail] = useState<string>("");

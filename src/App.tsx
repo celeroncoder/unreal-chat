@@ -1,7 +1,7 @@
 import { Paper } from "@mantine/core";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Header } from "./components";
-import { Home, Login, Signup } from "./pages";
+import { Header } from "@/components";
+import { Home, Login, Signup } from "@/pages";
 
 const App: React.FC = () => {
 	return (

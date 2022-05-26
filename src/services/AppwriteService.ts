@@ -1,5 +1,5 @@
 import { Appwrite } from "appwrite";
-import { Chat } from "../interfaces";
+import { Chat } from "@/interfaces";
 
 const config = {
 	projectId: import.meta.env.VITE_APPWRITE_PROJECT_ID,
