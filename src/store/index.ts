@@ -1,5 +1,6 @@
 import { Models } from "appwrite";
 import { atom } from "recoil";
+import { Chat } from "../interfaces";
 
 export const states = {
 	isLoggedInState: atom<boolean>({
@@ -14,9 +15,15 @@ export const states = {
 				onSet((user) => {
 					if (user) {
 						localStorage.setItem("user", JSON.stringify(user));
+					} else {
+						localStorage.setItem("user", "");
 					}
 				});
 			},
 		],
+	}),
+	chatsState: atom<Set<Chat>>({
+		key: "chats",
+		default: new Set([]),
 	}),
 };

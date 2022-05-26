@@ -1,4 +1,5 @@
 import { Appwrite } from "appwrite";
+import { Chat } from "../interfaces";
 
 const config = {
 	projectId: import.meta.env.VITE_APPWRITE_PROJECT_ID,
@@ -8,8 +9,10 @@ const config = {
 const appwrite = new Appwrite();
 
 class AppwriteService {
-	private readonly appwrite: Appwrite;
+	public readonly appwrite: Appwrite;
 	private readonly account;
+	public readonly collectionId: string = import.meta.env
+		.VITE_APPWRITE_COLLECTION_ID;
 
 	constructor() {
 		appwrite.setEndpoint(config.endpoint).setProject(config.projectId);
@@ -31,6 +34,24 @@ class AppwriteService {
 
 	getAccount() {
 		return this.account.get();
+	}
+
+	async getChats(): Promise<Set<Chat>> {
+		let documents = (
+			await this.appwrite.database.listDocuments(this.collectionId)
+		).documents;
+		let chats = new Set<Chat>([]);
+		documents.forEach((document) => {
+			chats.add({
+				// @ts-ignore
+				message: document.message,
+				// @ts-ignore
+				name: document.name,
+				id: document.$id,
+			});
+		});
+
+		return chats;
 	}
 }
 

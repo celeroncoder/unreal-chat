@@ -1,6 +1,9 @@
+import { showNotification } from "@mantine/notifications";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
+import { X } from "tabler-icons-react";
+import { Chats } from "../components";
 import { states } from "../store";
 
 const Home: React.FC = () => {
@@ -9,10 +12,22 @@ const Home: React.FC = () => {
 
 	useEffect(() => {
 		let user = localStorage.getItem("user");
-		user ? setUser(JSON.parse(user)) : navigate("/login");
+
+		try {
+			user ? setUser(JSON.parse(user)) : navigate("/login");
+		} catch (err: any) {
+			console.error(err);
+			showNotification({
+				title: "[ERROR] Some error occurred while parsing user data",
+				message: "Could not parse user data",
+				color: "red",
+				icon: <X />,
+			});
+			navigate("/login");
+		}
 	}, []);
 
-	return <div>'asd'</div>;
+	return <Chats />;
 };
 
 export default Home;
