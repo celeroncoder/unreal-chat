@@ -1,11 +1,12 @@
 import { Container, Paper, ScrollArea, Text } from "@mantine/core";
-import { useContext, useEffect } from "react";
+import { createRef, useContext, useEffect, useRef } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Chat } from "@/interfaces";
 import { states } from "@/store/index";
 import { AppwriteContext } from "@/components/Appwrite";
 import useStyles from "./List.style";
 import { Models } from "appwrite";
+import { useScrollIntoView } from "@mantine/hooks";
 
 const MessageList: React.FC = () => {
 	const [messages, setMessages] = useRecoilState(states.chatsState);
@@ -13,6 +14,17 @@ const MessageList: React.FC = () => {
 	const user = useRecoilValue(states.userState);
 
 	const { classes, cx } = useStyles();
+
+	const viewport = useRef<HTMLDivElement>(null);
+	const scrollToBottom = () =>
+		viewport!.current!.scrollTo({
+			top: viewport!.current!.scrollHeight,
+			behavior: "smooth",
+		});
+
+	useEffect(() => {
+		scrollToBottom();
+	}, [messages]);
 
 	useEffect(() => {
 		// subscription to new messages
@@ -50,7 +62,7 @@ const MessageList: React.FC = () => {
 
 	return (
 		<Container className={classes.root}>
-			<ScrollArea className={classes.container}>
+			<ScrollArea className={classes.container} viewportRef={viewport}>
 				{Array.from(messages).map((message) => (
 					<Paper
 						key={message.id}
