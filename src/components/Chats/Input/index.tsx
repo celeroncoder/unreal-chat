@@ -1,4 +1,4 @@
-import { ActionIcon, Container, Textarea } from "@mantine/core";
+import { ActionIcon, Container, TextInput } from "@mantine/core";
 import { useContext, useState } from "react";
 import { Send } from "tabler-icons-react";
 import { AppwriteContext } from "@/components/Appwrite";
@@ -15,31 +15,32 @@ const Input: React.FC = () => {
 	const [message, setMessage] = useState<string>("");
 
 	const sendMessage = async () => {
-		await appwrite?.sendMessage({ message, name: user?.name! });
-		setMessage("");
+		if (message !== "") {
+			await appwrite?.sendMessage({ message, name: user?.name! });
+			setMessage("");
+		}
 	};
 
 	return (
 		<Container className={classes.root}>
-			<Textarea
+			<TextInput
 				placeholder="Type a message..."
-				autosize
-				minRows={1}
 				my="sm"
 				radius="md"
 				value={message}
 				onChange={(e) => setMessage(e.target.value)}
 				style={{ flex: 1 }}
+				styles={{ input: { width: "105%" } }}
 			/>
 			<ActionIcon
 				ml="xs"
 				color="orange"
-				size="lg"
+				size="md"
 				radius="md"
 				variant="hover"
-				style={{ transform: "translateX(-4em)" }}
+				onClick={() => sendMessage()}
 			>
-				<Send onClick={() => sendMessage()} size={20} />
+				<Send size={20} />
 			</ActionIcon>
 		</Container>
 	);
