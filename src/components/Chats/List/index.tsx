@@ -5,6 +5,7 @@ import { Chat } from "@/interfaces";
 import { states } from "@/store/index";
 import { AppwriteContext } from "@/components/Appwrite";
 import useStyles from "./List.style";
+import { Models } from "appwrite";
 
 const MessageList: React.FC = () => {
 	const [messages, setMessages] = useRecoilState(states.chatsState);
@@ -31,7 +32,11 @@ const MessageList: React.FC = () => {
 						(messages) =>
 							new Set([
 								...Array.from(messages),
-								response.payload as Chat,
+								{
+									...(response.payload as Chat),
+									id: (response.payload as Models.Document)
+										.$id,
+								} as Chat,
 							])
 					);
 				}

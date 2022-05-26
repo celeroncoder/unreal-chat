@@ -53,6 +53,19 @@ class AppwriteService {
 
 		return chats;
 	}
+
+	async sendMessage(message: Chat): Promise<Chat> {
+		const res = await this.appwrite.database.createDocument(
+			this.collectionId,
+			"unique()",
+			{
+				name: message.name,
+				message: message.message,
+			}
+		);
+
+		return { id: res.$id, ...message };
+	}
 }
 
 export default AppwriteService;
