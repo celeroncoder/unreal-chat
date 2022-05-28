@@ -29,6 +29,7 @@ class AppwriteService {
 	}
 
 	logOutUser() {
+		localStorage.removeItem("user");
 		return this.account.deleteSession("current");
 	}
 
@@ -45,18 +46,23 @@ class AppwriteService {
 					100
 				)
 			).documents;
-		let chats = new Set<Chat>([]);
-		documents.forEach((document) => {
-			chats.add({
-				// @ts-ignore
-				message: document.message,
-				// @ts-ignore
-				name: document.name,
-				id: document.$id,
-			});
-		});
 
-		return chats;
+			let chats = new Set<Chat>([]);
+			documents.forEach((document) => {
+				chats.add({
+					// @ts-ignore
+					message: document.message,
+					// @ts-ignore
+					name: document.name,
+					id: document.$id,
+				});
+			});
+
+			return chats;
+		} catch (err) {
+			console.error(err);
+			return new Set<Chat>([]);
+		}
 	}
 
 	async sendMessage(message: Chat): Promise<Chat> {

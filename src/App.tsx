@@ -9,8 +9,8 @@ const App: React.FC = () => {
 			sx={(theme) => ({ height: "100vh", padding: theme.spacing.sm })}
 			radius={0}
 		>
-			<Header />
 			<BrowserRouter>
+				<Header />
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path={"/signup"} element={<Signup />} />
