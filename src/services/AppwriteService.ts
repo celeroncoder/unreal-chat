@@ -37,9 +37,14 @@ class AppwriteService {
 	}
 
 	async getChats(): Promise<Set<Chat>> {
-		let documents = (
-			await this.appwrite.database.listDocuments(this.collectionId)
-		).documents;
+		try {
+			const documents = (
+				await this.appwrite.database.listDocuments(
+					this.collectionId,
+					[],
+					100
+				)
+			).documents;
 		let chats = new Set<Chat>([]);
 		documents.forEach((document) => {
 			chats.add({
