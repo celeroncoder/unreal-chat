@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { RecoilRoot } from "recoil";
-import App from "@/App";
-import { Wrapper } from "@/components";
+const App = React.lazy(() => import("@/App"));
+import { Wrapper, Loader } from "@/components";
 import Appwrite, { AppwriteContext } from "@/components/Appwrite";
 import "@/index.css";
 
@@ -11,7 +11,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 		<Wrapper>
 			<RecoilRoot>
 				<AppwriteContext.Provider value={new Appwrite()}>
-					<App />
+					<Suspense fallback={<Loader />}>
+						<App />
+					</Suspense>
 				</AppwriteContext.Provider>
 			</RecoilRoot>
 		</Wrapper>
